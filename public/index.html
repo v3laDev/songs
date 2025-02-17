@@ -1,0 +1,26 @@
+<h2>Subir Canción</h2>
+<form id="uploadForm" enctype="multipart/form-data">
+  <input type="file" name="song" accept=".mp3" required />
+  <button type="submit">Subir Canción</button>
+</form>
+
+<script>
+  const form = document.getElementById('uploadForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      alert('Canción subida con éxito: ' + data.url);
+      form.reset();
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al subir la canción');
+    }
+  });
+</script>
