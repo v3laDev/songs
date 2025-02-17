@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: songs-host
+    env: node
+    region: oregon
+    buildCommand: 'npm install'
+    startCommand: 'node index.js'
