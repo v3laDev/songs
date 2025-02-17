@@ -1,0 +1,32 @@
+<h2>Lista de Canciones</h2>
+<ul id="songList"></ul>
+
+<script>
+  async function fetchSongs() {
+    try {
+      const response = await fetch('/songs');
+      const songs = await response.json();
+      const songList = document.getElementById('songList');
+      songList.innerHTML = '';
+
+      songs.forEach(song => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <strong>${song.name}</strong> 
+          <button onclick="copyToClipboard('${song.url}')">Copiar enlace</button>
+        `;
+        songList.appendChild(listItem);
+      });
+    } catch (error) {
+      console.error('Error al obtener las canciones:', error);
+    }
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Enlace copiado al portapapeles');
+    });
+  }
+
+  fetchSongs();
+</script>
